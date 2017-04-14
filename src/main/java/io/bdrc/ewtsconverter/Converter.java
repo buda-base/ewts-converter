@@ -1438,7 +1438,7 @@ public class Converter {
 		if (units == 0) warn(warns, "No Tibetan characters found!");
 
 		if (this.check_strict) {
-		    if (isCombining(out.charAt(0))) {
+		    if (out.length() > 0 && isCombining(out.charAt(0))) {
 		         warn(warns, "String starts with combining character '"+out.charAt(0)+"'");
 		    }
 		}
