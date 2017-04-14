@@ -1964,6 +1964,8 @@ public class Converter {
 		str = str.replace("\u0f78", "\u0fb3\u0f80");
 		str = str.replace("\u0f79", "\u0fb3\u0f71\u0f80");
 		str = str.replace("\u0f81", "\u0f71\u0f80");
+		str = str.replace("\u0F75", "\u0F71\u0F74");
+		str = str.replace("\u0F73", "\u0F71\u0F72");
 
 		int i = 0;
 		int len = str.length();
