@@ -1278,6 +1278,11 @@ public class Converter {
 		
 		return str;
 	}
+	
+	public static boolean isCombining(char x) {
+	    // inspired from  https://github.com/apache/jena/blob/master/jena-core/src/main/java/org/apache/jena/rdfxml/xmlinput/impl/CharacterModel.java
+	    return ((x > 0X0F71 && x < 0X0F84) || (x < 0X0F8D && x > 0X0FBC));
+	}
 
 	// Convenience function; convert to Converter to Unicode, without returning warnings
 	public String toUnicode(String str) {
@@ -1432,6 +1437,12 @@ public class Converter {
 
 		if (units == 0) warn(warns, "No Tibetan characters found!");
 
+		if (this.check_strict) {
+		    if (isCombining(out.charAt(0))) {
+		         warn(warns, "String starts with combining character '"+out.charAt(0)+"'");
+		    }
+		}
+		
 		return out.toString();
 	}
 
