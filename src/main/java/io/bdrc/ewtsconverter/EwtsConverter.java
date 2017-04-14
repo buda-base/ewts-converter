@@ -128,7 +128,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Converter {
+public class EwtsConverter {
 
 	// various options for Converter conversion
 	private boolean check, check_strict, print_warnings, fix_spacing;
@@ -1040,12 +1040,12 @@ public class Converter {
 
 	// constructor passing all options
 	// see the comments at the beginning of this file for more details.
-	public Converter(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing) {
+	public EwtsConverter(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing) {
 		initWylie(check, check_strict, print_warnings, fix_spacing);
 	}
 
 	// constructor with default options
-	public Converter() {
+	public EwtsConverter() {
 		initWylie(true, true, false, true);
 	}
 
