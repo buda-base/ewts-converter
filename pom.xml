@@ -6,7 +6,33 @@
   <packaging>jar</packaging>
   <version>1.1.0</version>
   <name>ewts-converter</name>
+  <description>Tibetan Ewts to/from Unicode conversion</description>
   <url>https://github.com/BuddhistDigitalResourceCenter/ewts-converter</url>
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+   <developers>
+    <developer>
+      <name>Roger Espel Llima</name>
+    </developer>
+    <developer>
+      <name>Elie Roux</name>
+      <email>elieroux@tbrc.org</email>
+      <organization>Buddhist Digital Resource Center</organization>
+      <organizationUrl>https://tbrc.org</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/BuddhistDigitalResourceCenter/ewts-converter.git</connection>
+    <developerConnection>scm:git:ssh://github.com:BuddhistDigitalResourceCenter/ewts-converter.git</developerConnection>
+    <url>http://github.com/BuddhistDigitalResourceCenter/ewts-converter/tree/master</url>
+  </scm>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -15,4 +41,48 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+  <plugins>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-source-plugin</artifactId>
+    <version>2.2.1</version>
+    <executions>
+     <execution>
+      <id>attach-sources</id>
+      <goals>
+       <goal>jar-no-fork</goal>
+      </goals>
+     </execution>
+    </executions>
+   </plugin>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-javadoc-plugin</artifactId>
+    <version>2.9.1</version>
+    <executions>
+     <execution>
+      <id>attach-javadocs</id>
+      <goals>
+       <goal>jar</goal>
+      </goals>
+     </execution>
+    </executions>
+   </plugin>
+   <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-gpg-plugin</artifactId>
+    <version>1.5</version>
+    <executions>
+     <execution>
+      <id>sign-artifacts</id>
+      <phase>verify</phase>
+      <goals>
+       <goal>sign</goal>
+      </goals>
+     </execution>
+    </executions>
+   </plugin>
+  </plugins>
+ </build>
 </project>
