@@ -1854,7 +1854,6 @@ public class EwtsConverter {
 	public String toWylie(String str, List<String> warns, boolean escape) {
 		StringBuilder out = new StringBuilder();
 		int line = 1;
-		int units = 0;
 
 		// globally search and replace some deprecated pre-composed Sanskrit vowels
 		str = str.replace("\u0f76", "\u0fb2\u0f80");
@@ -1878,7 +1877,6 @@ public class EwtsConverter {
 					ToWylieTsekbar tb = toWylieOneTsekbar(str, len, i);
 					out.append(tb.wylie);
 					i += tb.tokens_used;
-					units++;
 
 					for (String w : tb.warns) {
 						warnl(warns, line, w);
@@ -1896,7 +1894,6 @@ public class EwtsConverter {
 				if (o != null && (t != ' ' || (escape && !followedByNonTibetan(str, i)))) {
 					out.append(o);
 					i++;
-					units++;
 
 					if (!escape) i += handleSpaces(str, i, out);
 					continue ITER;
