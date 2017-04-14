@@ -653,22 +653,28 @@ public class Converter {
 		tmpSet.add("l");
 		m_suff2.put("d", tmpSet);
 
-		// root letter index for very ambiguous three-stack syllables
-		m_ambiguous_key = new HashMap<String, Integer>();
-		m_ambiguous_key.put("dgs", 	1);
-		m_ambiguous_key.put("dms", 	1);
-		m_ambiguous_key.put("'gs", 	1);
-		m_ambiguous_key.put("mngs", 	0);
-		m_ambiguous_key.put("bgs", 	0);
-		m_ambiguous_key.put("dbs", 	1);
+        // root letter index for very ambiguous three-stack syllables
+        m_ambiguous_key = new HashMap<String, Integer>();
+        m_ambiguous_key.put("dgs",  1);
+        m_ambiguous_key.put("dms",  1);
+        m_ambiguous_key.put("dngs", 1);
+        m_ambiguous_key.put("'gs",  1);
+        m_ambiguous_key.put("'bs",  1);
+        m_ambiguous_key.put("mngs", 0);
+        m_ambiguous_key.put("mgs",  0);
+        m_ambiguous_key.put("bgs",  0);
+        m_ambiguous_key.put("dbs",  1);
 
-		m_ambiguous_wylie = new HashMap<String, String>();
-		m_ambiguous_wylie.put("dgs", 	"dgas");
-		m_ambiguous_wylie.put("dms", 	"dmas");
-		m_ambiguous_wylie.put("'gs", 	"'gas");
-		m_ambiguous_wylie.put("mngs", 	"mangs");
-		m_ambiguous_wylie.put("bgs", 	"bags");
-		m_ambiguous_wylie.put("dbs", 	"dbas");
+        m_ambiguous_wylie = new HashMap<String, String>();
+        m_ambiguous_wylie.put("dgs",  "dgas");
+        m_ambiguous_wylie.put("dngs", "dngas");
+        m_ambiguous_wylie.put("dms",  "dmas");
+        m_ambiguous_wylie.put("'gs",  "'gas");
+        m_ambiguous_wylie.put("'bs",  "'bas");
+        m_ambiguous_wylie.put("mngs", "mangs");
+        m_ambiguous_wylie.put("mgs",  "mags");
+        m_ambiguous_wylie.put("bgs",  "bags");
+        m_ambiguous_wylie.put("dbs",  "dbas");
 
 		// *** Unicode to Converter mappings ***
 
