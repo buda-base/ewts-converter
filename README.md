@@ -4,6 +4,8 @@ This Java package implements the conversion between Unicode Tibetan text, and [E
 
 It is based on the equivalent Perl module, [Lingua::BO::Converter](http://www.digitaltibetan.org/cgi-bin/wylie.pl).
 
+See [Change log](CHANGELOG.md) for version notes.
+
 ## Installation
 
 Using maven:
@@ -16,7 +18,7 @@ Using maven:
     </dependency>
 ```
 
-### Use
+## Use
 
 ```java
 import io.bdrc.ewtsconverter.EwtsConverter;
@@ -69,7 +71,7 @@ be worthwhile to tokenize the input on the fly, rather than all at once.
 This class is entirely thread-safe.  In a multi-threaded environment,
 multiple threads can share the same instance without any problems.
 
-### License
+## License
 
 For simplicity reasons, we distribute our modifications only under the [Apache 2.0 Licens](LICENSE), but the original version had this statement:
 
