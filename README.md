@@ -11,7 +11,7 @@ See [Change log](CHANGELOG.md) for version notes.
 Using maven:
 
 ```xml
-	<dependency>
+    <dependency>
       <groupId>io.bdrc.ewtsconverter</groupId>
       <artifactId>ewts-converter</artifactId>
       <version>1.1.0</version>
