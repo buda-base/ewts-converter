@@ -1246,6 +1246,25 @@ public class Converter {
 		str = str.replace("8 ", "8_");
 		str = str.replace("9 ", "9_");
 		str = str.replace("_ ", "__");
+        str = str.replace("G", "g");
+        str = str.replace("K", "k");
+        str = str.replace("G.", "g");
+        str = str.replace("C", "c");
+        str = str.replace("B", "b");
+        str = str.replace(" b ", " ba ");
+        str = str.replace(" m ", " ma ");
+        str = str.replace(" m'i ", " ma'i ");
+        str = str.replace(" b'i ", " ba'i ");
+        str = str.replace("P", "p");
+        str = str.replace("L", "l");
+        str = str.replace(" M", "m");
+        str = str.replace("(M", "(m");
+        // convert S but not Sh:
+        str = str.replace("Sh", "ZZZ");
+        str = str.replace("S", "s");
+        str = str.replace("ZZZ", "Sh");
+        str = str.replace("Z", "z");
+        if (str.startsWith("M")) str = "m"+str.substring(1);
 		
 		return str;
 	}
