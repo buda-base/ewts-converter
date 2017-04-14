@@ -26,6 +26,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+* Tibetan EWTS from/to Unicode converter object.
+*  
+* @author Roger Espel Llima
+* @author Buddhist Digital Resource Center (BDRC)
+* @version 1.1.0
+*/
 public class EwtsConverter {
 
 	// various options for Converter conversion
@@ -936,13 +943,31 @@ public class EwtsConverter {
 		this.fix_spacing = fix_spacing;
 	}
 
-	// constructor passing all options
-	// see the comments at the beginning of this file for more details.
+	/**
+	* Default constructor, sets the following defaults:
+	*  
+	* @param check
+	* generate warnings for illegal consonant sequences
+	* @param check_strict
+	* stricter checking, examine the whole stack
+	* @param print_warnings
+	* print generated warnings to stdout
+	* @param fix_spacing
+	* remove spaces after newlines, collapse multiple tseks into one, etc
+	*/
 	public EwtsConverter(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing) {
 		initWylie(check, check_strict, print_warnings, fix_spacing);
 	}
 
-	// constructor with default options
+   /**
+    * Default constructor, sets the following defaults:
+    * <ul>
+    *   <li>check: true</li>
+    *   <li>check_strict: true</li>
+    *   <li>print_warning: false</li>
+    *   <li>fix_spacing: true</li>
+    * </ul> 
+    */
 	public EwtsConverter() {
 		initWylie(true, true, false, true);
 	}
@@ -1177,17 +1202,43 @@ public class EwtsConverter {
 		return str;
 	}
 	
+   /**
+    * Checks if a character is a Tibetan Unicode combining character.
+    *  
+    * @param x
+    * the character to check
+    * @return
+    * true if x is a Tibetan Unicode combining character
+    */
 	public static boolean isCombining(char x) {
 	    // inspired from  https://github.com/apache/jena/blob/master/jena-core/src/main/java/org/apache/jena/rdfxml/xmlinput/impl/CharacterModel.java
 	    return ((x > 0X0F71 && x < 0X0F84) || (x < 0X0F8D && x > 0X0FBC));
 	}
 
-	// Convenience function; convert to Converter to Unicode, without returning warnings
+   /**
+    * Converts a string to Unicode, fixes common EWTS errors.
+    *  
+    * @param str
+    * the string to convert
+    * @return
+    * the converted string
+    */
 	public String toUnicode(String str) {
 		return toUnicode(str, null, true);
 	}
 
-	// Converts a Converter (EWTS) string to unicode.  If 'warns' is not the null List, puts warnings into it.
+   /**
+    * Converts a string to Unicode.
+    *  
+    * @param str
+    * the string to convert
+    * @param warns
+    * the warning list to fill
+    * @param sloppy
+    * if common EWTS errors should be fixed
+    * @return
+    * the converted string
+    */
 	public String toUnicode(String str, List<String> warns, boolean sloppy) {
 		if (str == null) {
 			return " - no data - ";
@@ -1834,23 +1885,31 @@ public class EwtsConverter {
 		return joinStrings(out, "+");
 	}
 
-	// Converts from Unicode strings to Converter (EWTS) transliteration, without warnings,
-	// including escaping of non-tibetan into [comments].
+    /** 
+     * Converts from Unicode strings to Converter (EWTS) transliteration.
+     * 
+     * @param str
+     *     the Unicode string to be converted
+     * @return
+     *     the corresponding EWTS string
+     */
 	public String toWylie(String str) {
 		return toWylie(str, null, true);
 	}
 
-	// Converts from Unicode strings to Converter (EWTS) transliteration.
-	//
-	// Arguments are:
-	//    str   : the unicode string to be converted
-	//    escape: whether to escape non-tibetan characters according to Converter encoding.
-	//            if escape == false, anything that is not tibetan will be just passed through.
-	//
-	// Returns: the transliterated string.
-	//
-	// To get the warnings, call getWarnings() afterwards.
-
+	/** 
+	 * Converts from Unicode strings to Converter (EWTS) transliteration.
+	 * 
+	 * @param str
+	 *     the Unicode string to be converted
+	 * @param warns
+	 *     the warning list that will be filled
+	 * @param escape
+	 *     whether to escape non-tibetan characters according to Converter encoding.
+     *           if escape == false, anything that is not tibetan will be just passed through.
+	 * @return
+	 *     the corresponding EWTS string
+	 */
 	public String toWylie(String str, List<String> warns, boolean escape) {
 		StringBuilder out = new StringBuilder();
 		int line = 1;
