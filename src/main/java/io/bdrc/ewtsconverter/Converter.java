@@ -140,7 +140,7 @@ public class Converter {
 	m_tib_other;
 	private static HashMap<String, Integer> m_ambiguous_key;
 	private static HashMap<Character, Integer> m_tokens_start;
-	private static HashSet<String> m_special, m_suffixes, m_tib_stacks, m_tokens;
+	private static HashSet<String> m_special, m_suffixes, m_tib_stacks, m_tokens, m_affixedsuff2;
 	private static HashMap<String, HashSet<String>> m_superscripts, m_subscripts, m_prefixes, m_suff2;
 
 	// initialize all the hashes with the correspondences between Converter and Unicode.  
@@ -653,6 +653,10 @@ public class Converter {
 		tmpSet.add("l");
 		m_suff2.put("d", tmpSet);
 
+		m_affixedsuff2 = new HashSet<String>();
+		m_affixedsuff2.add("ng");
+		m_affixedsuff2.add("m");
+		
         // root letter index for very ambiguous three-stack syllables
         m_ambiguous_key = new HashMap<String, Integer>();
         m_ambiguous_key.put("dgs",  1);
@@ -1832,7 +1836,10 @@ public class Converter {
 							warns.add("Second suffix \"" + stack.single_consonant + "\" does not occur after \"" + prev_cons + "\".");
 						}
 					} else {
-						warns.add("Invalid 2nd suffix consonant: \"" + stack.single_consonant  + "\".");
+					    // handles pa'm, pa'ng
+					    if(!m_affixedsuff2.contains(stack.single_consonant) || !prev_cons.equals("'")) {
+					        warns.add("Invalid 2nd suffix consonant: \"" + stack.single_consonant  + "\".");
+					    }
 					}
 					state = State.NONE;
 
