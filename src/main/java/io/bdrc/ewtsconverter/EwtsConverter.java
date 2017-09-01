@@ -1155,6 +1155,9 @@ public class EwtsConverter {
 	 * @return normalized String
 	 */
 	private String sloppyWylie(String str) {
+        str = str.replace("x", "\\u0fbe");
+        str = str.replace("X", "\\u0fbe");
+        str = str.replace("...", "\\u0f0b\\u0f0b\\u0f0b");
 		str = str.replace(" (", "_(");
 		str = str.replace(") ", ")_");
 		str = str.replace("/ ", "/_");
@@ -1243,10 +1246,6 @@ public class EwtsConverter {
 		if (str == null) {
 			return " - no data - ";
 		}
-		
-		if (sloppy) {
-			str = sloppyWylie(str);
-		}
 
 		StringBuilder out = new StringBuilder();
 		int line = 1;
@@ -1257,6 +1256,10 @@ public class EwtsConverter {
 			str = str.replaceFirst("^\\s+", "");
 		}
 
+	    if (sloppy) {
+	        str = sloppyWylie(str);
+	    }
+		
 		// split into tokens
 		String[] tokens = splitIntoTokens(str);
 		int i = 0;
