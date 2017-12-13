@@ -37,13 +37,14 @@ System.out.println(wl.toWylie("\u0f66\u0f44\u0f66\u0f0b\u0f62\u0f92\u0fb1\u0f66\
 You can pass some options to the constructor:
 
 ```java
-EwtsConverter(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing)
+EwtsConverter(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing, Mode mode)
 ```
 
 - `check`: generate warnings for illegal consonant sequences; default is `true`.
 - `check_strict`: stricter checking, examine the whole stack; default is `true`.
 - `print_warnings`: print generated warnings to `System.out`; default is `false`.
 - `fix_spacing`: remove spaces after newlines, collapse multiple tseks into one, fix case, etc; default is `true`.
+- `mode`: an `EwtsConverter.Mode` value, one of `EWTS` (default), `ALALC` ([alalc transliteration scheme](https://www.loc.gov/catdir/cpso/romanization/tibetan.pdf)) or `DWTS` (close to alalc, not publicly documented).
 
 ### API
 
