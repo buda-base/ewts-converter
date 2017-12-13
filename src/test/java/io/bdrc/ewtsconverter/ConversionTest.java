@@ -1,6 +1,8 @@
 package io.bdrc.ewtsconverter;
 
 import io.bdrc.ewtsconverter.EwtsConverter;
+import io.bdrc.ewtsconverter.EwtsConverter.Mode;
+
 import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +35,13 @@ public class ConversionTest {
         res = toUnicode("pa'm", conversionWarnings);
         assertTrue(res.equals("པའམ"));
         assertTrue(conversionWarnings.size()==0);
+    }
+
+    @Test
+    public void textDwtsAlalc() {
+    	EwtsConverter converterAlalc = new EwtsConverter(false, false, false, false, EwtsConverter.Mode.ALALC);
+    	EwtsConverter converterDwts = new EwtsConverter(false, false, false, false, EwtsConverter.Mode.DWTS);
+    	assertTrue(converterDwts.toUnicode("Ḥdul-ba rnam-par-ḥbyed-pa").equals("འདུལ་བ་རྣམ་པར་འབྱེད་པ"));
+    	assertTrue(converterAlalc.toUnicode("Ri-gi-ā-ra").equals("རི་གི་ཨཱ་ར"));
     }
 }

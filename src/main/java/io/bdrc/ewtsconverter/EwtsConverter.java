@@ -49,6 +49,16 @@ public class EwtsConverter {
 	private static HashMap<Character, Integer> m_tokens_start;
 	private static HashSet<String> m_special, m_suffixes, m_tib_stacks, m_tokens, m_affixedsuff2;
 	private static HashMap<String, HashSet<String>> m_superscripts, m_subscripts, m_prefixes, m_suff2;
+	
+	public static enum Mode {
+		WYLIE,
+		EWTS,
+		DWTS,
+		ALALC,
+		ACIP
+	}
+	
+	private Mode mode = Mode.EWTS; // EWTS by default
 
 	// initialize all the hashes with the correspondences between Converter and Unicode.  
 	// this gets called from a 'static section' to initialize the hashes the moment the
@@ -932,7 +942,7 @@ public class EwtsConverter {
 	}
 
 	// setup a wylie object
-	private void initWylie(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing) {
+	private void initWylie(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing, Mode mode) {
 
 		// check_strict requires check
 		if (check_strict && !check) {
@@ -943,6 +953,7 @@ public class EwtsConverter {
 		this.check_strict = check_strict;
 		this.print_warnings = print_warnings;
 		this.fix_spacing = fix_spacing;
+		this.mode = mode;
 	}
 
 	/**
@@ -958,7 +969,25 @@ public class EwtsConverter {
 	* remove spaces after newlines, collapse multiple tseks into one, etc
 	*/
 	public EwtsConverter(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing) {
-		initWylie(check, check_strict, print_warnings, fix_spacing);
+		initWylie(check, check_strict, print_warnings, fix_spacing, Mode.EWTS);
+	}
+	
+	/**
+	* Default constructor, sets the following defaults:
+	*  
+	* @param check
+	* generate warnings for illegal consonant sequences
+	* @param check_strict
+	* stricter checking, examine the whole stack
+	* @param print_warnings
+	* print generated warnings to stdout
+	* @param fix_spacing
+	* remove spaces after newlines, collapse multiple tseks into one, etc.
+	* @param mode
+	* one of WYLIE, EWTS, ALALC, DWTS and ACIP
+	*/
+	public EwtsConverter(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing, Mode mode) {
+		initWylie(check, check_strict, print_warnings, fix_spacing, mode);
 	}
 
    /**
@@ -971,7 +1000,7 @@ public class EwtsConverter {
     * </ul> 
     */
 	public EwtsConverter() {
-		initWylie(true, true, false, true);
+		initWylie(true, true, false, true, Mode.EWTS);
 	}
 
 	// helper functions to access the various hash tables
@@ -1247,6 +1276,12 @@ public class EwtsConverter {
 		StringBuilder out = new StringBuilder();
 		int line = 1;
 		int units = 0;
+		
+		if (this.mode == Mode.DWTS) {
+			str = Dwts.dwtsToEwtsTokens(str);
+		} else if (this.mode == Mode.ALALC) {
+			str = Dwts.alalcToEwtsTokens(str);
+		}
 
 		// remove initial spaces if required
 		if (this.fix_spacing) {
