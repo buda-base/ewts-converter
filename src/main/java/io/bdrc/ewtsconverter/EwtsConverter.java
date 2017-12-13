@@ -1157,10 +1157,11 @@ public class EwtsConverter {
 	 * @return normalized String
 	 */
 	private String sloppyWylie(String str) {
-		final String[] base = new String[32];
-		final String[] repl = new String[32];
+		final String[] base = new String[33];
+		final String[] repl = new String[33];
 		int i = 0;
 		base[i] = "ʼ"; repl[i] = "'"; i++;
+		base[i] = "ʹ"; repl[i] = "'"; i++;
 		base[i] = "x"; repl[i] = "\\u0fbe"; i++;
 		base[i] = "X"; repl[i] = "\\u0fbe"; i++;
 		base[i] = "..."; repl[i] = "\\u0f0b\\u0f0b\\u0f0b"; i++;
