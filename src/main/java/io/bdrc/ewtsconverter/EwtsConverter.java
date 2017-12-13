@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
 * Tibetan EWTS from/to Unicode converter object.
 *  
@@ -1155,53 +1157,46 @@ public class EwtsConverter {
 	 * @return normalized String
 	 */
 	private String sloppyWylie(String str) {
-        str = str.replace("x", "\\u0fbe");
-        str = str.replace("X", "\\u0fbe");
-        str = str.replace("...", "\\u0f0b\\u0f0b\\u0f0b");
-		str = str.replace(" (", "_(");
-		str = str.replace(") ", ")_");
-		str = str.replace("/ ", "/_");
-		str = str.replace(" 0", "_0");
-		str = str.replace(" 1", "_1");
-		str = str.replace(" 2", "_2");
-		str = str.replace(" 3", "_3");
-		str = str.replace(" 4", "_4");
-		str = str.replace(" 5", "_5");
-		str = str.replace(" 6", "_6");
-		str = str.replace(" 7", "_7");
-		str = str.replace(" 8", "_8");
-		str = str.replace(" 9", "_9");
-		str = str.replace("0 ", "0_");
-		str = str.replace("1 ", "1_");
-		str = str.replace("2 ", "2_");
-		str = str.replace("3 ", "3_");
-		str = str.replace("4 ", "4_");
-		str = str.replace("5 ", "5_");
-		str = str.replace("6 ", "6_");
-		str = str.replace("7 ", "7_");
-		str = str.replace("8 ", "8_");
-		str = str.replace("9 ", "9_");
-		str = str.replace("_ ", "__");
-        str = str.replace("G", "g");
-        str = str.replace("K", "k");
-        str = str.replace("G.", "g");
-        str = str.replace("C", "c");
-        str = str.replace("B", "b");
-        str = str.replace(" b ", " ba ");
-        str = str.replace(" m ", " ma ");
-        str = str.replace(" m'i ", " ma'i ");
-        str = str.replace(" b'i ", " ba'i ");
-        str = str.replace("P", "p");
-        str = str.replace("L", "l");
-        str = str.replace(" M", "m");
-        str = str.replace("(M", "(m");
+		final String[] base = new String[31];
+		final String[] repl = new String[31];
+		int i = 0;
+		base[i] = "x"; repl[i] = "\\u0fbe"; i++;
+		base[i] = "X"; repl[i] = "\\u0fbe"; i++;
+		base[i] = "..."; repl[i] = "\\u0f0b\\u0f0b\\u0f0b"; i++;
+		base[i] = " ("; repl[i] = "_("; i++;
+		base[i] = ") "; repl[i] = ")_"; i++;
+		base[i] = "/ "; repl[i] = "/_"; i++;
+		base[i] = " 0"; repl[i] = "_0"; i++;
+		base[i] = " 1"; repl[i] = "_1"; i++;
+		base[i] = " 2"; repl[i] = "_2"; i++;
+		base[i] = " 3"; repl[i] = "_3"; i++;
+		base[i] = " 4"; repl[i] = "_4"; i++;
+		base[i] = " 5"; repl[i] = "_5"; i++;
+		base[i] = " 6"; repl[i] = "_6"; i++;
+		base[i] = " 7"; repl[i] = "_7"; i++;
+		base[i] = " 8"; repl[i] = "_8"; i++;
+		base[i] = " 9"; repl[i] = "_9"; i++;
+		base[i] = "_ "; repl[i] = "__"; i++;
+		base[i] = "G"; repl[i] = "g"; i++;
+		base[i] = "K"; repl[i] = "k"; i++;
+		base[i] = "G."; repl[i] = "g."; i++;
+		base[i] = "C"; repl[i] = "c"; i++;
+		base[i] = "B"; repl[i] = "b"; i++;
+		base[i] = " b "; repl[i] = " ba "; i++;
+		base[i] = " m "; repl[i] = " ma "; i++;
+		base[i] = " m'i "; repl[i] = " ma'i "; i++;
+		base[i] = " b'i "; repl[i] = " ba'i "; i++;
+		base[i] = "P"; repl[i] = "p"; i++;
+		base[i] = "L"; repl[i] = "l"; i++;
+		base[i] = " M"; repl[i] = " m"; i++;
+		base[i] = "(M"; repl[i] = "(m"; i++;
+		base[i] = "Z"; repl[i] = "z"; i++;
+		str = StringUtils.replaceEach(str, base, repl);
         // convert S but not Sh:
         str = str.replace("Sh", "ZZZ");
         str = str.replace("S", "s");
         str = str.replace("ZZZ", "Sh");
-        str = str.replace("Z", "z");
         if (str.startsWith("M")) str = "m"+str.substring(1);
-		
 		return str;
 	}
 	
