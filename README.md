@@ -18,6 +18,10 @@ Using maven:
     </dependency>
 ```
 
+## Building
+
+We provide one maven option: `-DperformRelease=true`, which will make the jar file gpg-signed.
+
 ## Use
 
 ```java
@@ -61,7 +65,7 @@ Converts from Unicode to Converter.   Puts the generated warnings in the list. I
 
 ### Performance and Concurrency
 
-This code should perform quite decently.  When converting from Converter to
+This code should perform quite decently.  When converting from Ewts to
 Unicode, the entire string is split into tokens, which are themselves
 strings.  If this takes too much memory, consider converting your text in
 smaller chunks.  With today's computers, it should not be a problem to
