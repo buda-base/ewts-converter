@@ -50,6 +50,9 @@ public class EwtsConverter {
 	private static HashSet<String> m_special, m_suffixes, m_tib_stacks, m_tokens, m_affixedsuff2;
 	private static HashMap<String, HashSet<String>> m_superscripts, m_subscripts, m_prefixes, m_suff2;
 	
+	private static final String[] base = new String[36];
+	private static final String[] repl = new String[36];
+	
 	public static enum Mode {
 		WYLIE,
 		EWTS,
@@ -929,8 +932,49 @@ public class EwtsConverter {
 		m_tokens.add("\r\n");
 	}
 
+	private static void initSloppyRepl() {
+		int i = 0;
+		base[i] = "ʼ"; repl[i] = "'"; i++; // 0x02BC
+		base[i] = "ʹ"; repl[i] = "'"; i++; // 0x02B9
+		base[i] = "‘"; repl[i] = "'"; i++; // 0x2018
+		base[i] = "’"; repl[i] = "'"; i++; // 0x2019
+		base[i] = "ʾ"; repl[i] = "'"; i++; // 0x02BE
+		base[i] = "x"; repl[i] = "\\u0fbe"; i++;
+		base[i] = "X"; repl[i] = "\\u0fbe"; i++;
+		base[i] = "..."; repl[i] = "\\u0f0b\\u0f0b\\u0f0b"; i++;
+		base[i] = " ("; repl[i] = "_("; i++;
+		base[i] = ") "; repl[i] = ")_"; i++;
+		base[i] = "/ "; repl[i] = "/_"; i++;
+		base[i] = " 0"; repl[i] = "_0"; i++;
+		base[i] = " 1"; repl[i] = "_1"; i++;
+		base[i] = " 2"; repl[i] = "_2"; i++;
+		base[i] = " 3"; repl[i] = "_3"; i++;
+		base[i] = " 4"; repl[i] = "_4"; i++;
+		base[i] = " 5"; repl[i] = "_5"; i++;
+		base[i] = " 6"; repl[i] = "_6"; i++;
+		base[i] = " 7"; repl[i] = "_7"; i++;
+		base[i] = " 8"; repl[i] = "_8"; i++;
+		base[i] = " 9"; repl[i] = "_9"; i++;
+		base[i] = "_ "; repl[i] = "__"; i++;
+		base[i] = "G"; repl[i] = "g"; i++;
+		base[i] = "K"; repl[i] = "k"; i++;
+		base[i] = "G."; repl[i] = "g."; i++;
+		base[i] = "C"; repl[i] = "c"; i++;
+		base[i] = "B"; repl[i] = "b"; i++;
+		base[i] = " b "; repl[i] = " ba "; i++;
+		base[i] = " m "; repl[i] = " ma "; i++;
+		base[i] = " m'i "; repl[i] = " ma'i "; i++;
+		base[i] = " b'i "; repl[i] = " ba'i "; i++;
+		base[i] = "P"; repl[i] = "p"; i++;
+		base[i] = "L"; repl[i] = "l"; i++;
+		base[i] = " M"; repl[i] = " m"; i++;
+		base[i] = "(M"; repl[i] = "(m"; i++;
+		base[i] = "Z"; repl[i] = "z"; i++;
+	}
+	
 	static {
 		initHashes();
+		initSloppyRepl();
 	}
 
 	// setup a wylie object
@@ -1178,45 +1222,6 @@ public class EwtsConverter {
 	 * @return normalized String
 	 */
 	private String sloppyWylie(String str) {
-		final String[] base = new String[36];
-		final String[] repl = new String[36];
-		int i = 0;
-		base[i] = "ʼ"; repl[i] = "'"; i++; // 0x02BC
-		base[i] = "ʹ"; repl[i] = "'"; i++; // 0x02B9
-		base[i] = "‘"; repl[i] = "'"; i++; // 0x2018
-		base[i] = "’"; repl[i] = "'"; i++; // 0x2019
-		base[i] = "ʾ"; repl[i] = "'"; i++; // 0x02BE
-		base[i] = "x"; repl[i] = "\\u0fbe"; i++;
-		base[i] = "X"; repl[i] = "\\u0fbe"; i++;
-		base[i] = "..."; repl[i] = "\\u0f0b\\u0f0b\\u0f0b"; i++;
-		base[i] = " ("; repl[i] = "_("; i++;
-		base[i] = ") "; repl[i] = ")_"; i++;
-		base[i] = "/ "; repl[i] = "/_"; i++;
-		base[i] = " 0"; repl[i] = "_0"; i++;
-		base[i] = " 1"; repl[i] = "_1"; i++;
-		base[i] = " 2"; repl[i] = "_2"; i++;
-		base[i] = " 3"; repl[i] = "_3"; i++;
-		base[i] = " 4"; repl[i] = "_4"; i++;
-		base[i] = " 5"; repl[i] = "_5"; i++;
-		base[i] = " 6"; repl[i] = "_6"; i++;
-		base[i] = " 7"; repl[i] = "_7"; i++;
-		base[i] = " 8"; repl[i] = "_8"; i++;
-		base[i] = " 9"; repl[i] = "_9"; i++;
-		base[i] = "_ "; repl[i] = "__"; i++;
-		base[i] = "G"; repl[i] = "g"; i++;
-		base[i] = "K"; repl[i] = "k"; i++;
-		base[i] = "G."; repl[i] = "g."; i++;
-		base[i] = "C"; repl[i] = "c"; i++;
-		base[i] = "B"; repl[i] = "b"; i++;
-		base[i] = " b "; repl[i] = " ba "; i++;
-		base[i] = " m "; repl[i] = " ma "; i++;
-		base[i] = " m'i "; repl[i] = " ma'i "; i++;
-		base[i] = " b'i "; repl[i] = " ba'i "; i++;
-		base[i] = "P"; repl[i] = "p"; i++;
-		base[i] = "L"; repl[i] = "l"; i++;
-		base[i] = " M"; repl[i] = " m"; i++;
-		base[i] = "(M"; repl[i] = "(m"; i++;
-		base[i] = "Z"; repl[i] = "z"; i++;
 		str = StringUtils.replaceEach(str, base, repl);
         // convert S but not Sh:
         str = str.replace("Sh", "ZZZ");
