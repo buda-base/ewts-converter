@@ -115,8 +115,6 @@ public class EwtsConverter {
 		m_consonant.put("zh", 	"\u0f5e");
 		m_consonant.put("z", 	"\u0f5f");
 		m_consonant.put("'", 	"\u0f60");
-		m_consonant.put("\u2018", 	"\u0f60");	// typographic quotes
-		m_consonant.put("\u2019", 	"\u0f60");
 		m_consonant.put("y", 	"\u0f61");
 		m_consonant.put("r", 	"\u0f62");
 		m_consonant.put("l", 	"\u0f63");
@@ -176,8 +174,6 @@ public class EwtsConverter {
 		m_subjoined.put("zh", 	"\u0fae");
 		m_subjoined.put("z", 	"\u0faf");
 		m_subjoined.put("'", 	"\u0fb0");
-		m_subjoined.put("\u2018", 	"\u0fb0");	// typographic quotes
-		m_subjoined.put("\u2019", 	"\u0fb0");
 		m_subjoined.put("y", 	"\u0fb1");
 		m_subjoined.put("r", 	"\u0fb2");
 		m_subjoined.put("l", 	"\u0fb3");
@@ -532,15 +528,11 @@ public class EwtsConverter {
 		tmpSet.add("ph+r");
 		tmpSet.add("b+r");
 		m_prefixes.put("'", tmpSet);
-		m_prefixes.put("\u2018", tmpSet);
-		m_prefixes.put("\u2019", tmpSet);
 
 		// set of suffix letters
 		// also included are some Skt letters b/c they occur often in suffix position in Skt words
 		m_suffixes = new HashSet<String>();
 		m_suffixes.add("'");
-		m_suffixes.add("\u2018");
-		m_suffixes.add("\u2019");
 		m_suffixes.add("g");
 		m_suffixes.add("ng");
 		m_suffixes.add("d");
@@ -1186,11 +1178,14 @@ public class EwtsConverter {
 	 * @return normalized String
 	 */
 	private String sloppyWylie(String str) {
-		final String[] base = new String[33];
-		final String[] repl = new String[33];
+		final String[] base = new String[36];
+		final String[] repl = new String[36];
 		int i = 0;
-		base[i] = "ʼ"; repl[i] = "'"; i++;
-		base[i] = "ʹ"; repl[i] = "'"; i++;
+		base[i] = "ʼ"; repl[i] = "'"; i++; // 0x02BC
+		base[i] = "ʹ"; repl[i] = "'"; i++; // 0x02B9
+		base[i] = "‘"; repl[i] = "'"; i++; // 0x2018
+		base[i] = "’"; repl[i] = "'"; i++; // 0x2019
+		base[i] = "ʾ"; repl[i] = "'"; i++; // 0x02BE
 		base[i] = "x"; repl[i] = "\\u0fbe"; i++;
 		base[i] = "X"; repl[i] = "\\u0fbe"; i++;
 		base[i] = "..."; repl[i] = "\\u0f0b\\u0f0b\\u0f0b"; i++;

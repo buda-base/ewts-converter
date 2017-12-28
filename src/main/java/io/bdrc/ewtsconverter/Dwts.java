@@ -84,7 +84,8 @@ public class Dwts {
     	replMap.put("`", "&"); // alalc
     	replMap.put("gʹy", "g.y"); // \u02B9, alalc example
     	replMap.put("ʹ", "+"); // \u02B9, seems to be a general case in alalc description although could sometimes be .
-    	replMap.put("ʹ", "'"); // \u2019, alalc
+        replMap.put("’", "'"); // \u2019, alalc
+        replMap.put("‘", "'"); // \u2018, just in case
     	replMap.put("ʼ", "'"); // \u02BC, alalc
     	replMap.put("ʾ", "'"); // \u02BE, indicated in a work document
     	replMap.put("v", "w"); // just in case
