@@ -14,7 +14,7 @@ Using maven:
     <dependency>
       <groupId>io.bdrc.ewtsconverter</groupId>
       <artifactId>ewts-converter</artifactId>
-      <version>1.1.0</version>
+      <version>1.3.0</version>
     </dependency>
 ```
 

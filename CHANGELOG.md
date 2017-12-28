@@ -2,9 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/). It follows [some conventions](http://keepachangelog.com/).
 
-## [Unreleased][Unreleased]
+## [1.3.0] - 2017-12-28
 ### Added
 - support for alalc transliteration scheme and DWTS (not publicly documented)
+- sloppy mode now supports various non-ascii apostrophes
+
+#### Changed
+- 0x2018 and 0x2019 are now invalid in non-sloppy mode
+- sloppy mode should be a little bit faster
 
 ## [1.2.0] - 2017-09-01
 ### Added
