@@ -12,7 +12,7 @@ public class ConversionTest {
 
     public String toUnicode(String s, List<String>conversionWarnings) {
         String convertedValue = converter.toUnicode(s, conversionWarnings, true);
-        System.out.println("converting \""+s+"\" into "+convertedValue);
+        //System.out.println("converting \""+s+"\" into "+convertedValue);
         if (conversionWarnings.size() > 0) {
             System.out.println("with warnings: "+String.join(", ", conversionWarnings));
         }
@@ -36,11 +36,17 @@ public class ConversionTest {
     }
 
     @Test
-    public void textDwtsAlalc() {
+    public void textDtsAlalcToEwts() {
     	EwtsConverter converterAlalc = new EwtsConverter(false, false, false, false, EwtsConverter.Mode.ALALC);
-    	EwtsConverter converterDwts = new EwtsConverter(false, false, false, false, EwtsConverter.Mode.DWTS);
+    	EwtsConverter converterDwts = new EwtsConverter(false, false, false, false, EwtsConverter.Mode.DTS);
+        //System.out.println(converterDwts.toUnicode("Ḥdul-ba rnam-par-ḥbyed-pa"));
     	assertTrue(converterDwts.toUnicode("Ḥdul-ba rnam-par-ḥbyed-pa").equals("འདུལ་བ་རྣམ་པར་འབྱེད་པ"));
     	assertTrue(converterAlalc.toUnicode("Ri-gi-ā-ra").equals("རི་གི་ཨཱ་ར"));
-    	//System.out.println(Dwts.dwtsToEwtsTokens("dwtsToEwtsTokens"))
+    }
+    
+    @Test
+    public void textEwtsToDtsAlalc() {
+        //System.out.println(TransConverter.EwtsToAlalc("ri gi A ra"));
+        assertTrue(TransConverter.EwtsToAlalc("ri gi A ra").equals("Ri-gi-ā-ra"));
     }
 }

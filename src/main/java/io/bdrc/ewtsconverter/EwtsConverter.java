@@ -57,6 +57,7 @@ public class EwtsConverter {
 		WYLIE,
 		EWTS,
 		DWTS,
+		DTS,
 		ALALC,
 		ACIP
 	}
@@ -1020,7 +1021,7 @@ public class EwtsConverter {
 	* @param fix_spacing
 	* remove spaces after newlines, collapse multiple tseks into one, etc.
 	* @param mode
-	* one of WYLIE, EWTS, ALALC, DWTS and ACIP
+	* one of WYLIE, EWTS, ALALC, DTS and ACIP
 	*/
 	public EwtsConverter(boolean check, boolean check_strict, boolean print_warnings, boolean fix_spacing, Mode mode) {
 		initWylie(check, check_strict, print_warnings, fix_spacing, mode);
@@ -1277,10 +1278,10 @@ public class EwtsConverter {
 		int line = 1;
 		int units = 0;
 		
-		if (this.mode == Mode.DWTS) {
-			str = Dwts.dwtsToEwtsTokens(str);
+		if (this.mode == Mode.DWTS || this.mode == Mode.DTS) {
+			str = TransConverter.dtsToEwtsTokens(str);
 		} else if (this.mode == Mode.ALALC) {
-			str = Dwts.alalcToEwtsTokens(str);
+			str = TransConverter.alalcToEwtsTokens(str);
 		}
 
 		// remove initial spaces if required
