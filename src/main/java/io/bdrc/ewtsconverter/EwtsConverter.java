@@ -1222,7 +1222,7 @@ public class EwtsConverter {
 	 * @param str String to be normalized
 	 * @return normalized String
 	 */
-	private String sloppyWylie(String str) {
+	public static String normalizeSloppyWylie(String str) {
 		str = StringUtils.replaceEach(str, base, repl);
         // convert S but not Sh:
         str = str.replace("Sh", "ZZZ");
@@ -1290,7 +1290,7 @@ public class EwtsConverter {
 		}
 
 	    if (sloppy) {
-	        str = sloppyWylie(str);
+	        str = normalizeSloppyWylie(str);
 	    }
 		
 		// split into tokens

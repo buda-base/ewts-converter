@@ -37,18 +37,23 @@ public class TransConverter {
     final static Map<String,String> replMapDtsToEwts = new TreeMap<String,String>();
     final static Map<String,String> replMapEwtsToAlalc = new TreeMap<String,String>();
     
+    private final static int NFD = 0;
+    private final static int NFC = 1;
+    private final static int ALWAYS_ALALC = 2;
+    private final static int NEVER_ALALC = 3;
+    
     static {
     	init();
     }
     
-    static void addMapping(final String target, final String ewts, final int targetType, final boolean toAlalc) {
+    static void addMapping(final String target, final String ewts, final int targetType, final int toAlalc) {
         if (targetType == DTS || targetType == BOTH) {
             replMapDtsToEwts.put(target, ewts);
         }
         if (targetType == ALALC || targetType == BOTH) {
             replMapAlalcToEwts.put(target, ewts);
         }
-        if (toAlalc) {
+        if (toAlalc == ALWAYS_ALALC || toAlalc == NFD) {
             replMapEwtsToAlalc.put(ewts, target);
         }
     }
@@ -56,74 +61,74 @@ public class TransConverter {
     public static void init() {
     	final Map<String,String> replMap = new TreeMap<String,String>();
     	// we always handle NFC and NFD, that makes the list a bit cumbersome
-    	addMapping("-", " ", BOTH, true);
-    	addMapping("ś", "sh", BOTH, true);
-    	addMapping("s\\u0301", "sh", BOTH, false);
-    	addMapping("ź", "zh", BOTH, true);
-    	addMapping("z\\u0301", "zh", BOTH, false);
-    	addMapping("ñ", "ny", BOTH, true);
-    	addMapping("n\\u0303", "ny", BOTH, false);
-    	addMapping("ṅ", "ng", BOTH, true);
-    	addMapping("n\\u0307", "ng", BOTH, false);
-    	addMapping("ā", "A", BOTH, true);
-    	addMapping("a\\u0304", "A", BOTH, false);
-    	addMapping("ī", "I", BOTH, true);
-    	addMapping("i\\u0304", "I", BOTH, false);
-    	addMapping("ū", "U", BOTH, true);
-    	addMapping("u\\u0304", "U", BOTH, true);
-    	addMapping("ṃ", "M", BOTH, true);
-    	addMapping("m\\u0323", "M", BOTH, true);
-    	addMapping("ṁ", "~M", BOTH, true);
-    	addMapping("m\\u0307", "~M", BOTH, true);
-    	addMapping("m\\u0310", "~M", BOTH, true); // alalc
-    	addMapping("m\\u0901", "~M", BOTH, true); // alalc
-    	addMapping("m\\u0301", "~M`", BOTH, true); // dts
-    	addMapping("ṛ", "r-i", BOTH, true); // dts
-    	addMapping("r\\u0323", "r-i", BOTH, true);
-    	addMapping("r\\u0325", "r-i", BOTH, true); // alalc
-    	addMapping("ṝ", "r-I", BOTH, true); // dts
-    	addMapping("ṛ\\u0304", "r-I", BOTH, true);
-    	addMapping("r\\u0323\\u0304", "r-I", BOTH, true);
-    	addMapping("r\\u0304\\u0323", "r-I", BOTH, true);
-    	addMapping("r\\u0325\\u0304", "r-I", BOTH, true); // alalc
-    	addMapping("r\\u0304\\u0325", "r-I", BOTH, true);
-    	addMapping("ḷ", "l-i", BOTH, true); // dts
-    	addMapping("l\\u0323", "l-i", BOTH, true);
-    	addMapping("l\\u0325", "l-i", BOTH, true); // alalc
-    	addMapping("ḹ", "l-i", BOTH, true); // dts
-    	addMapping("ḷ\\u0304", "l-i", BOTH, false);
-    	addMapping("l\\u0323\\u0304", "l-i", BOTH, false);
-    	addMapping("l\\u0304\\u0323", "l-i", BOTH, false);
-    	addMapping("l\\u0325\\u0304", "l-i", BOTH, false); // alalc
-    	addMapping("l\\u0304\\u0325", "l-i", BOTH, false);
-    	addMapping("ṭ", "T", BOTH, true);
-    	addMapping("t\\u0323", "T", BOTH, false);
-    	addMapping("ḍ", "D", BOTH, true);
-    	addMapping("d\\u0323", "D", BOTH, false);
-    	addMapping("ṇ", "N", BOTH, true);
-    	addMapping("n\\u0323", "N", BOTH, false);
-    	addMapping("ṣ", "Sh", BOTH, true);
-    	addMapping("s\\u0323", "Sh", BOTH, false);
-    	addMapping("`", "&", BOTH, true); // alalc
-    	addMapping("gʹy", "g.y", BOTH, false); // \u02B9, alalc example
-    	addMapping("ʹ", "+", BOTH, false); // \u02B9, seems to be a general case in alalc description although could sometimes be .
-        addMapping("’", "'", BOTH, true); // \u2019, alalc
-        addMapping("‘", "'", BOTH, false); // \u2018, just in case
-    	addMapping("ʼ", "'", BOTH, false); // \u02BC, alalc
-    	addMapping("ʾ", "'", BOTH, false); // \u02BE, indicated in a work document
-    	addMapping("v", "w", BOTH, true); // just in case
+    	addMapping("-", " ", BOTH, ALWAYS_ALALC);
+    	addMapping("ś", "sh", BOTH, NFC);
+    	addMapping("s\u0301", "sh", BOTH, NFD);
+    	addMapping("ź", "zh", BOTH, NFC);
+    	addMapping("z\u0301", "zh", BOTH, NFD);
+    	addMapping("ñ", "ny", BOTH, NFC);
+    	addMapping("n\u0303", "ny", BOTH, NFD);
+    	addMapping("ṅ", "ng", BOTH, NFC);
+    	addMapping("n\u0307", "ng", BOTH, NFD);
+    	addMapping("ā", "A", BOTH, NFC);
+    	addMapping("a\u0304", "A", BOTH, NFD);
+    	addMapping("ī", "I", BOTH, NFC);
+    	addMapping("i\u0304", "I", BOTH, NFD);
+    	addMapping("ū", "U", BOTH, NFC);
+    	addMapping("u\u0304", "U", BOTH, NFD);
+    	addMapping("ṃ", "M", BOTH, NFC);
+    	addMapping("m\u0323", "M", BOTH, NFD);
+    	addMapping("ṁ", "~M", BOTH, NEVER_ALALC);
+    	addMapping("m\u0307", "~M", BOTH, NEVER_ALALC);
+    	addMapping("m\u0310", "~M", BOTH, ALWAYS_ALALC); // alalc
+    	addMapping("m\u0901", "~M", BOTH, NEVER_ALALC); // alalc
+    	addMapping("m\u0301", "~M`", BOTH, NEVER_ALALC); // dts
+    	addMapping("ṛ", "r-i", BOTH, NFC); // dts
+    	addMapping("r\u0323", "r-i", BOTH, NEVER_ALALC);
+    	addMapping("r\u0325", "r-i", BOTH, NFD); // alalc
+    	addMapping("ṝ", "r-I", BOTH, NFC); // dts
+    	addMapping("ṛ\u0304", "r-I", BOTH, NEVER_ALALC);
+    	addMapping("r\u0323\u0304", "r-I", BOTH, NEVER_ALALC);
+    	addMapping("r\u0304\u0323", "r-I", BOTH, NEVER_ALALC);
+    	addMapping("r\u0325\u0304", "r-I", BOTH, NFD); // alalc
+    	addMapping("r\u0304\u0325", "r-I", BOTH, NEVER_ALALC);
+    	addMapping("ḷ", "l-i", BOTH, NFC); // dts
+    	addMapping("l\u0323", "l-i", BOTH, NEVER_ALALC);
+    	addMapping("l\u0325", "l-i", BOTH, NFD); // alalc
+    	addMapping("ḹ", "l-i", BOTH, NFC); // dts
+    	addMapping("ḷ\u0304", "l-i", BOTH, NEVER_ALALC);
+    	addMapping("l\u0323\u0304", "l-i", BOTH, NEVER_ALALC);
+    	addMapping("l\u0304\u0323", "l-i", BOTH, NEVER_ALALC);
+    	addMapping("l\u0325\u0304", "l-i", BOTH, NFD); // alalc
+    	addMapping("l\u0304\u0325", "l-i", BOTH, NEVER_ALALC);
+    	addMapping("ṭ", "T", BOTH, NFC);
+    	addMapping("t\u0323", "T", BOTH, NFD);
+    	addMapping("ḍ", "D", BOTH, NFC);
+    	addMapping("d\u0323", "D", BOTH, NFD);
+    	addMapping("ṇ", "N", BOTH, NFC);
+    	addMapping("n\u0323", "N", BOTH, NFD);
+    	addMapping("ṣ", "Sh", BOTH, NFC);
+    	addMapping("s\u0323", "Sh", BOTH, NFD);
+    	addMapping("`", "&", BOTH, ALWAYS_ALALC); // alalc
+    	addMapping("gʹy", "g.y", BOTH, ALWAYS_ALALC); // \u02B9, alalc example
+    	// \u02B9, seems to be a general case in alalc description although could sometimes be .
+    	// we don't map the reverse direction (to alalc) as + will always be discarded by the final regex
+    	addMapping("ʹ", "+", BOTH, NEVER_ALALC);
+        addMapping("’", "'", BOTH, NEVER_ALALC); // \u2019, alalc
+        addMapping("‘", "'", BOTH, NEVER_ALALC); // \u2018, just in case
+    	addMapping("ʼ", "'", BOTH, NEVER_ALALC); // \u02BC, alalc
+    	addMapping("ʾ", "'", BOTH, NEVER_ALALC); // \u02BE, indicated in a work document
+    	addMapping("v", "w", BOTH, ALWAYS_ALALC); // just in case
     	// the only contradiction between DWTS and Ala-lc is:
-    	addMapping("ḥ", "H", ALALC, true); // alalc
-    	addMapping("h\\u0323", "H", ALALC, false);
-    	addMapping("ḥ", "'", DTS, false); // dwts
-    	addMapping("h\\u0323", "'", DTS, false);
+    	addMapping("ḥ", "H", ALALC, NFC); // alalc
+    	addMapping("h\u0323", "H", ALALC, NFD);
+    	addMapping("ḥ", "'", DTS, NEVER_ALALC); // dwts
+    	addMapping("h\u0323", "'", DTS, NEVER_ALALC);
     	baseDts = replMapDtsToEwts.keySet().toArray(new String[0]);
     	replDtsToEwts = replMapDtsToEwts.values().toArray(new String[0]);
     	baseAlalc = replMapAlalcToEwts.keySet().toArray(new String[0]);
         replAlalcToEwts = replMapDtsToEwts.values().toArray(new String[0]);
         // Alalc doesn't like shad, nor any kind of punctuation
-        replMapEwtsToAlalc.put(" /", "");
-        replMapEwtsToAlalc.put("/", "");
         replMapEwtsToAlalc.put("<<", "\"");
         replMapEwtsToAlalc.put(">>", "\"");
         replMapEwtsToAlalc.put(".", "ʹ");
@@ -131,14 +136,6 @@ public class TransConverter {
         replMapEwtsToAlalc.put("t+s", "tʹs");
         replMapEwtsToAlalc.put("s+h", "sʹh");
         replMapEwtsToAlalc.put("n+g", "nʹg");
-        replMapEwtsToAlalc.put("+", "");
-        replMapEwtsToAlalc.put(";", "");
-        replMapEwtsToAlalc.put("|", "");
-        replMapEwtsToAlalc.put("!", "");
-        replMapEwtsToAlalc.put(":", "");
-        replMapEwtsToAlalc.put("=", "");
-        replMapEwtsToAlalc.put("_", " ");
-        replMapEwtsToAlalc.put("*", "-");
         baseEwts = replMapEwtsToAlalc.keySet().toArray(new String[0]);
         replEwtsToAlalc = replMapEwtsToAlalc.values().toArray(new String[0]);
     }
@@ -153,9 +150,18 @@ public class TransConverter {
     	return StringUtils.replaceEach(s, baseAlalc, replAlalcToEwts);
     }
 
-    public static String EwtsToAlalc(String s) {
-        s =  StringUtils.replaceEach(s, baseEwts, replEwtsToAlalc);
-        return WordUtils.capitalize(s);
+    public static String EwtsToAlalc(String s, boolean sloppy) {
+        if (sloppy) {
+            s = EwtsConverter.normalizeSloppyWylie(s);
+        }
+        s = StringUtils.replaceEach(s, baseEwts, replEwtsToAlalc);
+        s = s.replaceAll("[^a-zA-Z0-9 \"ʹ\\u0325\\u0304\\u0323\\u0301\\u0310()\\-]", "");
+        // in the case of "ng /", previous regexp will remove the "/" but we'll have a spurious "-":
+        s = StringUtils.strip(s, "-");
+        // this will also lower case oddities like R and Y
+        s = s.toLowerCase();
+        //s = WordUtils.capitalize(s);
+        return s;
     }
     
 }
