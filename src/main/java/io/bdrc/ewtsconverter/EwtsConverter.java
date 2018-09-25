@@ -33,7 +33,7 @@ import org.apache.commons.lang3.StringUtils;
 *  
 * @author Roger Espel Llima
 * @author Buddhist Digital Resource Center (BDRC)
-* @version 1.1.0
+* @version 1.4.0
 */
 public class EwtsConverter {
 

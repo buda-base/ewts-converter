@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.text.WordUtils;
 
 /* 
  * This file is used to convert DTS and ALALC transliteration schemes to EWTS.
@@ -19,8 +18,17 @@ import org.apache.commons.text.WordUtils;
  *  An important difference that is not handled by this file is that alalc and dts both
  *  stack letters by default even if they do not form standard stacks. For instance
  *  ṅkhya in alalc would be ng+kh+ya in ewts (and would produce no warning).
+ *  
+ *  The decision to use NFKD for alalc comes from exchanges with Columbia University for
+ *  the purpose of exporting to MARC. 
  */
 
+/**
+* Tibetan EWTS from/to DTS or ALA-LC romanization conversion methods
+* 
+* @author Buddhist Digital Resource Center (BDRC)
+* @version 1.4.0
+*/
 public class TransConverter {
     public static String baseDts[];
     public static String baseAlalc[];
@@ -58,8 +66,7 @@ public class TransConverter {
         }
     }
 
-    public static void init() {
-    	final Map<String,String> replMap = new TreeMap<String,String>();
+    static void init() {
     	// we always handle NFC and NFD, that makes the list a bit cumbersome
     	addMapping("-", " ", BOTH, ALWAYS_ALALC);
     	addMapping("ś", "sh", BOTH, NFC);
@@ -122,7 +129,7 @@ public class TransConverter {
     	// the only contradiction between DWTS and Ala-lc is:
     	addMapping("ḥ", "H", ALALC, NFC); // alalc
     	addMapping("h\u0323", "H", ALALC, NFD);
-    	addMapping("ḥ", "'", DTS, NEVER_ALALC); // dwts
+    	addMapping("ḥ", "'", DTS, NEVER_ALALC); // dts
     	addMapping("h\u0323", "'", DTS, NEVER_ALALC);
     	baseDts = replMapDtsToEwts.keySet().toArray(new String[0]);
     	replDtsToEwts = replMapDtsToEwts.values().toArray(new String[0]);
@@ -132,6 +139,7 @@ public class TransConverter {
         replMapEwtsToAlalc.put("<<", "\"");
         replMapEwtsToAlalc.put(">>", "\"");
         replMapEwtsToAlalc.put(".", "ʹ");
+        replMapEwtsToAlalc.put("_", " ");
         replMapEwtsToAlalc.put("n+y", "nʹy");
         replMapEwtsToAlalc.put("t+s", "tʹs");
         replMapEwtsToAlalc.put("s+h", "sʹh");
@@ -140,28 +148,50 @@ public class TransConverter {
         replEwtsToAlalc = replMapEwtsToAlalc.values().toArray(new String[0]);
     }
 
-    public static String dtsToEwtsTokens(String s) {
-    	s = s.toLowerCase();
-    	return StringUtils.replaceEach(s, baseDts, replDtsToEwts);
+    /**
+    * Converts a string from DTS to EWTS
+    *  
+    * @param dtsString
+    * the DTS encoded string
+    * @return EWTS string
+    */
+    public static String dtsToEwtsTokens(String dtsString) {
+    	dtsString = dtsString.toLowerCase();
+    	return StringUtils.replaceEach(dtsString, baseDts, replDtsToEwts);
     }
 
-    public static String alalcToEwtsTokens(String s) {
-    	s = s.toLowerCase();
-    	return StringUtils.replaceEach(s, baseAlalc, replAlalcToEwts);
+    /**
+    * Converts a string from ALA-LC to EWTS
+    *  
+    * @param alalcStr
+    * the ALA-LC encoded string
+    * @return EWTS string
+    */
+    public static String alalcToEwtsTokens(String alalcStr) {
+    	alalcStr = alalcStr.toLowerCase();
+    	return StringUtils.replaceEach(alalcStr, baseAlalc, replAlalcToEwts);
     }
 
-    public static String EwtsToAlalc(String s, boolean sloppy) {
+    /**
+    * Converts a string from EWTS to ALA-LC (NFKD, lower case)
+    *  
+    * @param ewtsStr
+    * the EWTS encoded string
+    * @param sloppy
+    * if common EWTS should be fixed before conversion
+    * @return ALA-LC encoded string
+    */
+    public static String EwtsToAlalc(String ewtsStr, final boolean sloppy) {
         if (sloppy) {
-            s = EwtsConverter.normalizeSloppyWylie(s);
+            ewtsStr = EwtsConverter.normalizeSloppyWylie(ewtsStr);
         }
-        s = StringUtils.replaceEach(s, baseEwts, replEwtsToAlalc);
-        s = s.replaceAll("[^a-zA-Z0-9 \"ʹ\\u0325\\u0304\\u0323\\u0301\\u0310()\\-]", "");
+        ewtsStr = StringUtils.replaceEach(ewtsStr, baseEwts, replEwtsToAlalc);
+        ewtsStr = ewtsStr.replaceAll("[^a-zA-Z0-9 \"ʹ\u0325\u0304\u0303\u0323\u0307\u0301\u0310()\\-]", "");
         // in the case of "ng /", previous regexp will remove the "/" but we'll have a spurious "-":
-        s = StringUtils.strip(s, "-");
+        ewtsStr = StringUtils.strip(ewtsStr, "-");
         // this will also lower case oddities like R and Y
-        s = s.toLowerCase();
-        //s = WordUtils.capitalize(s);
-        return s;
+        ewtsStr = ewtsStr.toLowerCase();
+        return ewtsStr;
     }
     
 }
