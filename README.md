@@ -104,7 +104,7 @@ multiple threads can share the same instance without any problems.
 
 ## License
 
-For simplicity reasons, we distribute our modifications only under the [Apache 2.0 Licens](LICENSE), but the original version had this statement:
+For simplicity reasons, we distribute our modifications only under the [Apache 2.0 License](LICENSE), but the original version had this statement:
 
 ```txt
 This library is Free Software.  You can redistribute it or modify it, under
