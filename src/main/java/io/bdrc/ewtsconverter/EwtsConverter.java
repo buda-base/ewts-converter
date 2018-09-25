@@ -1279,9 +1279,9 @@ public class EwtsConverter {
 		int units = 0;
 		
 		if (this.mode == Mode.DWTS || this.mode == Mode.DTS) {
-			str = TransConverter.dtsToEwtsTokens(str);
+			str = TransConverter.dtsToEwts(str);
 		} else if (this.mode == Mode.ALALC) {
-			str = TransConverter.alalcToEwtsTokens(str);
+			str = TransConverter.alalcToEwts(str);
 		}
 
 		// remove initial spaces if required

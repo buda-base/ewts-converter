@@ -46,9 +46,9 @@ public class ConversionTest {
     
     @Test
     public void textEwtsToDtsAlalc() {
-        assertTrue(TransConverter.EwtsToAlalc("Ri gi A ra", false).equals("ri-gi-ā-ra"));
-        assertTrue(TransConverter.EwtsToAlalc("<<n+yA~M", true).equals("\"nʹyām̐"));
-        assertTrue(TransConverter.EwtsToAlalc("ba_cang /", true).equals("ba caṅ"));
-        assertTrue(TransConverter.EwtsToAlalc("kl-i", true).equals("kl̥̄"));
+        assertTrue(TransConverter.ewtsToAlalc("Ri gi A ra", false).equals("ri-gi-ā-ra"));
+        assertTrue(TransConverter.ewtsToAlalc("<<n+yA~M", true).equals("\"nʹyām̐"));
+        assertTrue(TransConverter.ewtsToAlalc("ba_cang /", true).equals("ba caṅ"));
+        assertTrue(TransConverter.ewtsToAlalc("kl-i", true).equals("kl̥̄"));
     }
 }

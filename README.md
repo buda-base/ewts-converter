@@ -1,6 +1,6 @@
 # Ewts Converter
 
-This Java package implements the conversion between Unicode Tibetan text, and [Extended Wylie transliteration (EWTS)](http://www.thlib.org/reference/transliteration/#essay=/thl/ewts/).
+This Java package implements the conversion between Unicode Tibetan text, and [Extended Wylie transliteration (EWTS)](http://www.thlib.org/reference/transliteration/#essay=/thl/ewts/). It also has convenience conversion methods from Diacritics Transliteration Scheme (DTS) and [ALA-LC romanization](https://www.loc.gov/catdir/cpso/romanization/tibetan.pdf) to EWTS, and from EWTS to ALA-LC romanization.
 
 It is based on the equivalent Perl module, [Lingua::BO::Converter](http://www.digitaltibetan.org/cgi-bin/wylie.pl).
 
@@ -14,7 +14,7 @@ Using maven:
     <dependency>
       <groupId>io.bdrc.ewtsconverter</groupId>
       <artifactId>ewts-converter</artifactId>
-      <version>1.3.0</version>
+      <version>1.4.0</version>
     </dependency>
 ```
 
@@ -44,9 +44,11 @@ EwtsConverter(boolean check, boolean check_strict, boolean print_warnings, boole
 - `check_strict`: stricter checking, examine the whole stack; default is `true`.
 - `print_warnings`: print generated warnings to `System.out`; default is `false`.
 - `fix_spacing`: remove spaces after newlines, collapse multiple tseks into one, fix case, etc; default is `true`.
-- `mode`: an `EwtsConverter.Mode` value, one of `EWTS` (default), `ALALC` ([alalc transliteration scheme](https://www.loc.gov/catdir/cpso/romanization/tibetan.pdf)) or `DWTS` (close to alalc, not publicly documented).
+- `mode`: an `EwtsConverter.Mode` value, one of `EWTS` (default), `ALALC` ([alalc transliteration scheme](https://www.loc.gov/catdir/cpso/romanization/tibetan.pdf)) or `DTS` (close to alalc, not publicly documented).
 
 ### API
+
+#### Functions of the EwtsConverter object
 
 ##### String toUnicode(String wylie_string)
 
@@ -62,7 +64,31 @@ Converts from Unicode to Converter. Anything that is not Tibetan Unicode is conv
 
 ##### String toWylie(String unicode_string, ArrayList<String> warns, boolean escape)
 
-Converts from Unicode to Converter.   Puts the generated warnings in the list. If escape is false, anything that is not Tibetan Unicode is just passed through as it is.
+Converts from Unicode to Converter. Puts the generated warnings in the list. If escape is false, anything that is not Tibetan Unicode is just passed through as it is.
+
+#### Static functions of the EwtsConverter class
+
+##### String normalizeSloppyWylie(String str)
+
+Returns a string normalizing common errors in EWTS.
+
+##### boolean isCombining(char c)
+
+Returns `true` if the character is a Tibetan combining character.
+
+#### Static functions of the TransConverter class
+
+##### String dtsToEwts(String dtsString)
+
+Converts a string from DTS to EWTS.
+
+##### String alalcToEwts(String alalcStr)
+
+Converts a string from ALA-LC to EWTS.
+
+##### String ewtsToAlalc(String ewtsStr, boolean sloppy)
+
+Converts a string from EWTS to ALA-LC (in NFKD, lower-case). If sloppy is `true`, also normalizes common errors in EWTS.
 
 ### Performance and Concurrency
 

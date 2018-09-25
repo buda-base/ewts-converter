@@ -2,9 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/). It follows [some conventions](http://keepachangelog.com/).
 
+## [1.4.0] - 2018-09-25
+### Added
+- support for conversion from ewts to ala-lc
+
 ## [1.3.0] - 2017-12-28
 ### Added
-- support for alalc transliteration scheme and DWTS (not publicly documented)
+- support for alalc transliteration scheme and DTS (not publicly documented)
 - sloppy mode now supports various non-ascii apostrophes
 
 #### Changed

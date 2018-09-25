@@ -155,7 +155,7 @@ public class TransConverter {
     * the DTS encoded string
     * @return EWTS string
     */
-    public static String dtsToEwtsTokens(String dtsString) {
+    public static String dtsToEwts(String dtsString) {
     	dtsString = dtsString.toLowerCase();
     	return StringUtils.replaceEach(dtsString, baseDts, replDtsToEwts);
     }
@@ -167,7 +167,7 @@ public class TransConverter {
     * the ALA-LC encoded string
     * @return EWTS string
     */
-    public static String alalcToEwtsTokens(String alalcStr) {
+    public static String alalcToEwts(String alalcStr) {
     	alalcStr = alalcStr.toLowerCase();
     	return StringUtils.replaceEach(alalcStr, baseAlalc, replAlalcToEwts);
     }
@@ -181,7 +181,7 @@ public class TransConverter {
     * if common EWTS should be fixed before conversion
     * @return ALA-LC encoded string
     */
-    public static String EwtsToAlalc(String ewtsStr, final boolean sloppy) {
+    public static String ewtsToAlalc(String ewtsStr, final boolean sloppy) {
         if (sloppy) {
             ewtsStr = EwtsConverter.normalizeSloppyWylie(ewtsStr);
         }
