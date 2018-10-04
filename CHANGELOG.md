@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/). It follows [some conventions](http://keepachangelog.com/).
 
+## [1.4.1] - 2018-10-04
+### Fixed
+- fixes in ewts to ala-lc conversion
+
 ## [1.4.0] - 2018-09-25
 ### Added
 - support for conversion from ewts to ala-lc
