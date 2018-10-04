@@ -69,14 +69,16 @@ public class TransConverter {
     static void init() {
     	// we always handle NFC and NFD, that makes the list a bit cumbersome
     	addMapping("-", " ", BOTH, ALWAYS_ALALC);
-    	addMapping("ś", "sh", BOTH, NFC);
-    	addMapping("s\u0301", "sh", BOTH, NFD);
-    	addMapping("ź", "zh", BOTH, NFC);
-    	addMapping("z\u0301", "zh", BOTH, NFD);
-    	addMapping("ñ", "ny", BOTH, NFC);
-    	addMapping("n\u0303", "ny", BOTH, NFD);
-    	addMapping("ṅ", "ng", BOTH, NFC);
-    	addMapping("n\u0307", "ng", BOTH, NFD);
+    	addMapping("ś", "sh", BOTH, NEVER_ALALC);
+    	addMapping("s\u0301", "sh", BOTH, NEVER_ALALC);
+        addMapping("ṣ", "Sh", BOTH, NEVER_ALALC);
+        addMapping("s\u0323", "Sh", BOTH, NEVER_ALALC);
+    	addMapping("ź", "zh", BOTH, NEVER_ALALC);
+    	addMapping("z\u0301", "zh", BOTH, NEVER_ALALC);
+    	addMapping("ñ", "ny", BOTH, NEVER_ALALC);
+    	addMapping("n\u0303", "ny", BOTH, NEVER_ALALC);
+    	addMapping("ṅ", "ng", BOTH, NEVER_ALALC);
+    	addMapping("n\u0307", "ng", BOTH, NEVER_ALALC);
     	addMapping("ā", "A", BOTH, NFC);
     	addMapping("a\u0304", "A", BOTH, NFD);
     	addMapping("ī", "I", BOTH, NFC);
@@ -114,8 +116,6 @@ public class TransConverter {
     	addMapping("d\u0323", "D", BOTH, NFD);
     	addMapping("ṇ", "N", BOTH, NFC);
     	addMapping("n\u0323", "N", BOTH, NFD);
-    	addMapping("ṣ", "Sh", BOTH, NFC);
-    	addMapping("s\u0323", "Sh", BOTH, NFD);
     	addMapping("`", "&", BOTH, ALWAYS_ALALC); // alalc
     	addMapping("gʹy", "g.y", BOTH, ALWAYS_ALALC); // \u02B9, alalc example
     	// \u02B9, seems to be a general case in alalc description although could sometimes be .

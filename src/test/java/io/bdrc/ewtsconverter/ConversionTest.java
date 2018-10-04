@@ -48,7 +48,8 @@ public class ConversionTest {
     public void textEwtsToDtsAlalc() {
         assertTrue(TransConverter.ewtsToAlalc("Ri gi A ra", false).equals("ri-gi-ā-ra"));
         assertTrue(TransConverter.ewtsToAlalc("<<n+yA~M", true).equals("\"nʹyām̐"));
-        assertTrue(TransConverter.ewtsToAlalc("ba_cang /", true).equals("ba caṅ"));
+        assertTrue(TransConverter.ewtsToAlalc("ba_cang /", true).equals("ba cang"));
         assertTrue(TransConverter.ewtsToAlalc("kl-i", true).equals("kl̥̄"));
+        assertTrue(TransConverter.ewtsToAlalc("tshi shi", true).equals("tshi-shi"));
     }
 }
