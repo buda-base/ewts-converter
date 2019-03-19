@@ -213,6 +213,7 @@ public class EwtsConverter {
         m_final_uni.put("H", "\u0f7f");
         m_final_uni.put("?", "\u0f84");
         m_final_uni.put("^", "\u0f39");
+        m_final_uni.put("&", "\u0f85");
 
         // final symbols organized by class
         m_final_class = new HashMap<String, String>();
@@ -224,6 +225,7 @@ public class EwtsConverter {
         m_final_class.put("H", "H");
         m_final_class.put("?", "?");
         m_final_class.put("^", "^");
+        m_final_class.put("&", "&");
 
         // other stand-alone symbols
         m_other = new HashMap<String, String>();
@@ -720,6 +722,7 @@ public class EwtsConverter {
         m_tib_final_wylie.put('\u0f39', "^");
         m_tib_final_wylie.put('\u0f7f', "H");
         m_tib_final_wylie.put('\u0f84', "?");
+        m_tib_final_wylie.put('\u0f85', "&");
 
         // final symbols by class
         m_tib_final_class = new HashMap<Character, String>();
@@ -731,6 +734,7 @@ public class EwtsConverter {
         m_tib_final_class.put('\u0f39', "^");
         m_tib_final_class.put('\u0f7f', "H");
         m_tib_final_class.put('\u0f84', "?");
+        m_tib_final_class.put('\u0f85', "&");
 
         // special characters introduced by ^
         m_tib_caret = new HashMap<String, String>();
