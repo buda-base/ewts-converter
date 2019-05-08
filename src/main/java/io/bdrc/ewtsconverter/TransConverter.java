@@ -68,7 +68,7 @@ public class TransConverter {
 
     static void init() {
         // we always handle NFC and NFD, that makes the list a bit cumbersome
-        addMapping("-", " ", BOTH, ALWAYS_ALALC);
+        // addMapping("-", " ", BOTH, ALWAYS_ALALC);
         addMapping("ś", "sh", BOTH, NEVER_ALALC);
         addMapping("s\u0301", "sh", BOTH, NEVER_ALALC);
         addMapping("ṣ", "Sh", BOTH, NEVER_ALALC);
@@ -140,7 +140,7 @@ public class TransConverter {
         // Alalc doesn't like shad, nor any kind of punctuation
         replMapEwtsToAlalc.put("<<", "\"");
         replMapEwtsToAlalc.put(">>", "\"");
-        replMapEwtsToAlalc.put(".", "ʹ");
+        // replMapEwtsToAlalc.put(".", "ʹ"); // use regexp instead
         replMapEwtsToAlalc.put("_", " ");
         replMapEwtsToAlalc.put("n+y", "nʹy");
         replMapEwtsToAlalc.put("t+s", "tʹs");
@@ -188,10 +188,12 @@ public class TransConverter {
             ewtsStr = EwtsConverter.normalizeSloppyWylie(ewtsStr);
         }
         ewtsStr = StringUtils.replaceEach(ewtsStr, baseEwts, replEwtsToAlalc);
+        // we only want to replace dots with ʹ when they're between letters
+        ewtsStr = ewtsStr.replaceAll("([a-zA-Z])\\.([a-zA-Z])", "$1ʹ$2");
         ewtsStr = ewtsStr.replaceAll("[^a-zA-Z0-9 \"ʹʼ`\u0325\u0304\u0303\u0323\u0307\u0301\u0310()\\-]", "");
         // in the case of "ng /", previous regexp will remove the "/" but we'll have a
         // spurious "-":
-        ewtsStr = StringUtils.strip(ewtsStr, "-");
+        ewtsStr = StringUtils.strip(ewtsStr, " ");
         // this will also lower case oddities like R and Y
         ewtsStr = ewtsStr.toLowerCase();
         return ewtsStr;
