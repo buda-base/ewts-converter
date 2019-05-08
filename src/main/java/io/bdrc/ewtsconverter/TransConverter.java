@@ -69,6 +69,8 @@ public class TransConverter {
     static void init() {
         // we always handle NFC and NFD, that makes the list a bit cumbersome
         // addMapping("-", " ", BOTH, ALWAYS_ALALC);
+        replMapDtsToEwts.put("-", " ");
+        replMapAlalcToEwts.put("-", " ");
         addMapping("ś", "sh", BOTH, NEVER_ALALC);
         addMapping("s\u0301", "sh", BOTH, NEVER_ALALC);
         addMapping("ṣ", "Sh", BOTH, NEVER_ALALC);

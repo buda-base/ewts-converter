@@ -42,7 +42,6 @@ public class ConversionTest {
     public void textDtsAlalcToEwts() {
         EwtsConverter converterAlalc = new EwtsConverter(false, false, false, false, EwtsConverter.Mode.ALALC);
         EwtsConverter converterDwts = new EwtsConverter(false, false, false, false, EwtsConverter.Mode.DTS);
-        // System.out.println(converterDwts.toUnicode("Ḥdul-ba rnam-par-ḥbyed-pa"));
         assertTrue(converterDwts.toUnicode("Ḥdul-ba rnam-par-ḥbyed-pa").equals("འདུལ་བ་རྣམ་པར་འབྱེད་པ"));
         assertTrue(converterAlalc.toUnicode("Ri-gi-ā-ra").equals("རི་གི་ཨཱ་ར"));
     }
