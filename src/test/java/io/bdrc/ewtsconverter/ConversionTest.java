@@ -55,6 +55,7 @@ public class ConversionTest {
         assertTrue(TransConverter.ewtsToAlalc("tshi shi", true).equals("tshi shi"));
         assertTrue(TransConverter.ewtsToAlalc("g.yag", true).equals("gʹyag"));
         assertTrue(TransConverter.ewtsToAlalc("ga&", true).equals("ga`"));
+        assertTrue(TransConverter.ewtsToAlalc("dwa", true).equals("dwa"));
         assertTrue(TransConverter.ewtsToAlalc("bka' 'gyur", true).equals("bkaʼ ʼgyur"));
         assertTrue(TransConverter.ewtsToAlalc("par gzhi 1., par thengs 2.", true).equals("par gzhi 1 par thengs 2"));
     }

@@ -5,27 +5,27 @@ import java.util.TreeMap;
 
 import org.apache.commons.lang3.StringUtils;
 
-/* 
+/*
  * This file is used to convert DTS and ALALC transliteration schemes to EWTS.
- * 
+ *
  * ALALC is defined by this document:
  *    https://www.loc.gov/catdir/cpso/romanization/tibetan.pdf
- *    
+ *
  *  DTS (Diacritics Transliteration Scheme) has never been normalized. Some important internal documents use
  *  it though, and we thought it would be useful to handle it too, especially
  *  since the differences are fairly small (they are indicated in the init() function).
- *  
+ *
  *  An important difference that is not handled by this file is that alalc and dts both
  *  stack letters by default even if they do not form standard stacks. For instance
  *  ṅkhya in alalc would be ng+kh+ya in ewts (and would produce no warning).
- *  
+ *
  *  The decision to use NFKD for alalc comes from exchanges with Columbia University for
- *  the purpose of exporting to MARC. 
+ *  the purpose of exporting to MARC.
  */
 
 /**
  * Tibetan EWTS from/to DTS or ALA-LC romanization conversion methods
- * 
+ *
  * @author Buddhist Digital Resource Center (BDRC)
  * @version 1.4.0
  */
@@ -129,7 +129,6 @@ public class TransConverter {
         addMapping("‘", "'", BOTH, NEVER_ALALC); // \u2018, just in case
         addMapping("ʼ", "'", BOTH, ALWAYS_ALALC); // \u02BC, alalc
         addMapping("ʾ", "'", BOTH, NEVER_ALALC); // \u02BE, indicated in a work document
-        addMapping("v", "w", BOTH, ALWAYS_ALALC); // just in case
         // the only contradiction between DWTS and Ala-lc is:
         addMapping("ḥ", "H", ALALC, NFC); // alalc
         addMapping("h\u0323", "H", ALALC, NFD);
@@ -154,7 +153,7 @@ public class TransConverter {
 
     /**
      * Converts a string from DTS to EWTS
-     * 
+     *
      * @param dtsString
      *            the DTS encoded string
      * @return EWTS string
@@ -166,7 +165,7 @@ public class TransConverter {
 
     /**
      * Converts a string from ALA-LC to EWTS
-     * 
+     *
      * @param alalcStr
      *            the ALA-LC encoded string
      * @return EWTS string
@@ -178,7 +177,7 @@ public class TransConverter {
 
     /**
      * Converts a string from EWTS to ALA-LC (NFKD, lower case)
-     * 
+     *
      * @param ewtsStr
      *            the EWTS encoded string
      * @param sloppy
