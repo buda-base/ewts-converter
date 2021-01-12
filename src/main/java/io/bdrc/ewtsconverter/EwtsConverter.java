@@ -50,8 +50,8 @@ public class EwtsConverter {
     private static HashSet<String> m_special, m_suffixes, m_tib_stacks, m_tokens, m_affixedsuff2;
     private static HashMap<String, HashSet<String>> m_superscripts, m_subscripts, m_prefixes, m_suff2;
 
-    private static final String[] base = new String[44];
-    private static final String[] repl = new String[44];
+    private static final String[] base = new String[47];
+    private static final String[] repl = new String[47];
 
     public static enum Mode {
         WYLIE, EWTS, DWTS, DTS, ALALC, ACIP
@@ -1021,6 +1021,18 @@ public class EwtsConverter {
         base[i] = " b ";
         repl[i] = " ba ";
         i++;
+        base[i] = "Ts";
+        repl[i] = "ts";
+        i++;
+        base[i] = "Dz";
+        repl[i] = "dz";
+        i++;
+        base[i] = "Ny";
+        repl[i] = "ny";
+        i++;
+        base[i] = "Ng";
+        repl[i] = "ng";
+        i++;
         base[i] = " m ";
         repl[i] = " ma ";
         i++;
@@ -1045,6 +1057,9 @@ public class EwtsConverter {
         base[i] = "E";
         repl[i] = "e";
         i++;
+        base[i] = "O";
+        repl[i] = "o";
+        i++;
         base[i] = "（";
         repl[i] = "(";
         i++;
@@ -1062,6 +1077,9 @@ public class EwtsConverter {
         i++;
         base[i] = "H ";
         repl[i] = "H";
+        i++;
+        base[i] = "adm";
+        repl[i] = "ad+m";
         i++;
     }
 

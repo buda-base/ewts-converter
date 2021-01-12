@@ -36,6 +36,7 @@ public class ConversionTest {
         assertTrue(conversionWarnings.size() == 0);
         assertTrue(converter.toUnicode("ga&").equals("ག྅"));
         assertTrue(converter.toWylie("ག྅").equals("ga&"));
+        assertTrue(converter.toUnicode("mNyon mNges gTso O rDza padma").equals("མཉོན་མངེས་གཙོ་ཨོ་རྫ་པདྨ"));
     }
 
     @Test
