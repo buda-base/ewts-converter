@@ -1012,9 +1012,6 @@ public class EwtsConverter {
         base[i] = "K";
         repl[i] = "k";
         i++;
-        base[i] = "G.";
-        repl[i] = "g.";
-        i++;
         base[i] = "C";
         repl[i] = "c";
         i++;
@@ -1039,12 +1036,6 @@ public class EwtsConverter {
         base[i] = "L";
         repl[i] = "l";
         i++;
-        base[i] = " M";
-        repl[i] = " m";
-        i++;
-        base[i] = "(M";
-        repl[i] = "(m";
-        i++;
         base[i] = "Z";
         repl[i] = "z";
         i++;
@@ -1053,9 +1044,6 @@ public class EwtsConverter {
         i++;
         base[i] = "E";
         repl[i] = "e";
-        i++;
-        base[i] = "H";
-        repl[i] = "h";
         i++;
         base[i] = "（";
         repl[i] = "(";
@@ -1071,6 +1059,9 @@ public class EwtsConverter {
         i++;
         base[i] = "：";
         repl[i] = ":";
+        i++;
+        base[i] = "H ";
+        repl[i] = "H";
         i++;
     }
 
@@ -1333,12 +1324,13 @@ public class EwtsConverter {
      */
     public static String normalizeSloppyWylie(String str) {
         str = StringUtils.replaceEach(str, base, repl);
+        // lower case H and M smartly:
+        str = str.replaceAll("(^|[^aeiouAIU])H", "$1h");
+        str = str.replaceAll("(^|[^aeiouAIU~])M", "$1m");
         // convert S but not Sh:
         str = str.replace("Sh", "ZZZ");
         str = str.replace("S", "s");
         str = str.replace("ZZZ", "Sh");
-        if (str.startsWith("M"))
-            str = "m" + str.substring(1);
         return str;
     }
 

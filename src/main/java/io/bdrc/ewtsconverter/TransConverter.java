@@ -134,10 +134,15 @@ public class TransConverter {
         addMapping("h\u0323", "H", ALALC, NFD);
         addMapping("ḥ", "'", DTS, NEVER_ALALC); // dts
         addMapping("h\u0323", "'", DTS, NEVER_ALALC);
+        // these are just extra that are found in some transliterations
+        replMapDtsToEwts.put("š", "sh");
+        replMapDtsToEwts.put("s\u030C", "sh");
+        replMapDtsToEwts.put("ž", "zh");
+        replMapDtsToEwts.put("z\u030C", "zh");
         baseDts = replMapDtsToEwts.keySet().toArray(new String[0]);
         replDtsToEwts = replMapDtsToEwts.values().toArray(new String[0]);
         baseAlalc = replMapAlalcToEwts.keySet().toArray(new String[0]);
-        replAlalcToEwts = replMapDtsToEwts.values().toArray(new String[0]);
+        replAlalcToEwts = replMapAlalcToEwts.values().toArray(new String[0]);
         // Alalc doesn't like shad, nor any kind of punctuation
         replMapEwtsToAlalc.put("<<", "\"");
         replMapEwtsToAlalc.put(">>", "\"");

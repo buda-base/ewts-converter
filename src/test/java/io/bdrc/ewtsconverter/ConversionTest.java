@@ -47,8 +47,13 @@ public class ConversionTest {
     }
 
     @Test
+    public void textConvertSloppy() {
+        assertTrue(EwtsConverter.normalizeSloppyWylie("Mi la lHan Mi kaHthog 'uM Ma m ").equals("mi la lhan mi kaHthog 'uM ma ma "));
+    }
+    
+    @Test
     public void textEwtsToDtsAlalc() {
-        assertTrue(TransConverter.ewtsToAlalc("Ri gi A ra", false).equals("ri gi ā ra"));
+        assertTrue(TransConverter.ewtsToAlalc("Ri gi A ra sha", false).equals("ri gi ā ra sha"));
         assertTrue(TransConverter.ewtsToAlalc("<<n+yA~M", true).equals("\"nʹyām̐"));
         assertTrue(TransConverter.ewtsToAlalc("ba_cang /", true).equals("ba cang"));
         assertTrue(TransConverter.ewtsToAlalc("kl-i", true).equals("kl̥̄"));
@@ -58,5 +63,7 @@ public class ConversionTest {
         assertTrue(TransConverter.ewtsToAlalc("dwa", true).equals("dwa"));
         assertTrue(TransConverter.ewtsToAlalc("bka' 'gyur", true).equals("bkaʼ ʼgyur"));
         assertTrue(TransConverter.ewtsToAlalc("par gzhi 1., par thengs 2.", true).equals("par gzhi 1 par thengs 2"));
+        assertTrue(TransConverter.dtsToEwts("ša śa").equals("sha sha"));
+        assertTrue(TransConverter.alalcToEwts("ā").equals("A"));
     }
 }
