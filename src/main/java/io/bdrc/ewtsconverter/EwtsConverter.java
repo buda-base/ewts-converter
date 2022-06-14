@@ -50,8 +50,8 @@ public class EwtsConverter {
     private static HashSet<String> m_special, m_suffixes, m_tib_stacks, m_tokens, m_affixedsuff2;
     private static HashMap<String, HashSet<String>> m_superscripts, m_subscripts, m_prefixes, m_suff2;
 
-    private static final String[] base = new String[47];
-    private static final String[] repl = new String[47];
+    private static final String[] base = new String[45];
+    private static final String[] repl = new String[45];
 
     public static enum Mode {
         WYLIE, EWTS, DWTS, DTS, ALALC, ACIP
@@ -197,8 +197,10 @@ public class EwtsConverter {
         m_vowel.put("u", "\u0f74");
         m_vowel.put("U", "\u0f71\u0f74");
         m_vowel.put("e", "\u0f7a");
+        m_vowel.put("E", "\u0f71\u0f7a");
         m_vowel.put("ai", "\u0f7b");
         m_vowel.put("o", "\u0f7c");
+        m_vowel.put("O", "\u0f71\u0f7c");
         m_vowel.put("au", "\u0f7d");
         m_vowel.put("-i", "\u0f80");
         m_vowel.put("-I", "\u0f71\u0f80");
@@ -711,6 +713,10 @@ public class EwtsConverter {
         m_tib_vowel_long.put("i", "I");
         m_tib_vowel_long.put("u", "U");
         m_tib_vowel_long.put("-i", "-I");
+        // this is not in the original Wylie spec but this is
+        // encountered in Chinese names
+        m_tib_vowel_long.put("e", "E");
+        m_tib_vowel_long.put("o", "O");
 
         // final symbols => wylie
         m_tib_final_wylie = new HashMap<Character, String>();
@@ -1053,12 +1059,6 @@ public class EwtsConverter {
         i++;
         base[i] = "J";
         repl[i] = "j";
-        i++;
-        base[i] = "E";
-        repl[i] = "e";
-        i++;
-        base[i] = "O";
-        repl[i] = "o";
         i++;
         base[i] = "（";
         repl[i] = "(";
