@@ -52,6 +52,9 @@ public class EwtsConverter {
 
     private static final String[] base = new String[45];
     private static final String[] repl = new String[45];
+    
+    private static final String[] baseL = new String[39];
+    private static final String[] replL = new String[39];
 
     public static enum Mode {
         WYLIE, EWTS, DWTS, DTS, ALALC, ACIP
@@ -1082,9 +1085,132 @@ public class EwtsConverter {
         repl[i] = "ad+m";
         i++;
     }
+    
+    private static void initLenientRepl() {
+        int i = 0;
+        baseL[i] = "ʼ";
+        replL[i] = "'";
+        i++; // 0x02BC
+        baseL[i] = "ʹ";
+        replL[i] = "'";
+        i++; // 0x02B9
+        baseL[i] = "‘";
+        replL[i] = "'";
+        i++; // 0x2018
+        baseL[i] = "’";
+        replL[i] = "'";
+        i++; // 0x2019
+        baseL[i] = "ʾ";
+        replL[i] = "'";
+        i++; // 0x02BE
+        baseL[i] = "x";
+        replL[i] = "\\u0fbe";
+        i++;
+        baseL[i] = "X";
+        replL[i] = "\\u0fbe";
+        i++;
+        baseL[i] = "...";
+        replL[i] = "\\u0f0b\\u0f0b\\u0f0b";
+        i++;
+        baseL[i] = "-i";
+        replL[i] = "i";
+        i++;
+        baseL[i] = "-";
+        replL[i] = " ";
+        i++;
+        baseL[i] = "：";
+        replL[i] = ":";
+        i++;
+        baseL[i] = "adm";
+        replL[i] = "ad+m";
+        i++;
+        baseL[i] = "\u0304";
+        replL[i] = "";
+        i++;
+        baseL[i] = "ḥ";
+        replL[i] = "'";
+        i++;
+        baseL[i] = "h\u0323";
+        replL[i] = "'";
+        i++;
+        baseL[i] = "ṣ";
+        replL[i] = "sh";
+        i++;
+        baseL[i] = "ṣ";
+        replL[i] = "sh";
+        i++;
+        baseL[i] = "m\0323";
+        replL[i] = "M";
+        i++;
+        baseL[i] = "ṃ";
+        replL[i] = "M";
+        i++;
+        baseL[i] = "s\u0323";
+        replL[i] = "sh";
+        i++;
+        baseL[i] = "\u0323";
+        replL[i] = "";
+        i++;
+        baseL[i] = "\u0310";
+        replL[i] = "";
+        i++;
+        baseL[i] = "ś";
+        replL[i] = "sh";
+        i++;
+        baseL[i] = "ź";
+        replL[i] = "zh";
+        i++;
+        baseL[i] = "\u0301";
+        replL[i] = "h"; // in ś and ź
+        i++;
+        baseL[i] = "ñ";
+        replL[i] = "ny";
+        i++;
+        baseL[i] = "n\u0303";
+        replL[i] = "ny";
+        i++;
+        baseL[i] = "ṅ";
+        replL[i] = "ng";
+        i++;
+        baseL[i] = "n\u0307";
+        replL[i] = "ng";
+        i++;
+        baseL[i] = "ā";
+        replL[i] = "a";
+        i++;
+        baseL[i] = "ī";
+        replL[i] = "i";
+        i++;
+        baseL[i] = "ū";
+        replL[i] = "u";
+        i++;
+        baseL[i] = "ṁ";
+        replL[i] = "M";
+        i++;
+        baseL[i] = "ṭ";
+        replL[i] = "t";
+        i++;
+        baseL[i] = "ḍ";
+        replL[i] = "d";
+        i++;
+        baseL[i] = "ṇ";
+        replL[i] = "n";
+        i++;
+        // q and ! are H and M escaping lower casing
+        baseL[i] = "q ";
+        replL[i] = "H";
+        i++;
+        baseL[i] = "q";
+        replL[i] = "H";
+        i++;
+        baseL[i] = "!";
+        replL[i] = "M";
+        i++;
+    }
 
     static {
         initHashes();
+        initLenientRepl();
         initSloppyRepl();
     }
 
@@ -1351,6 +1477,25 @@ public class EwtsConverter {
         str = str.replace("ZZZ", "Sh");
         return str;
     }
+    
+    /**
+     * lenient (use at your own risk, not adapted to UIs), made to fix
+     * https://github.com/buda-base/lucene-bo/issues/32 where letters need to
+     * be lower-cased early so that they can be stacked correctly in the conversion.
+     * Also handles some DTS / ALALC 
+     * 
+     * @param str
+     *            String to be normalized
+     * @return normalized String
+     */
+    public static String normalizeForLenientSearch(String str) {
+        // lower case H and M to q and ! when they should be kept uppercase
+        str = str.replaceAll("([aeiouAIU])H", "$1q");
+        str = str.replaceAll("([aeiouAIU])M", "$1!");
+        str = str.toLowerCase();
+        str = StringUtils.replaceEach(str, baseL, replL);
+        return str;
+    }
 
     /**
      * Checks if a character is a Tibetan Unicode combining character.
@@ -1373,7 +1518,7 @@ public class EwtsConverter {
      * @return the converted string
      */
     public String toUnicode(String str) {
-        return toUnicode(str, null, true);
+        return toUnicode(str, null, true, false);
     }
 
     /**
@@ -1387,12 +1532,16 @@ public class EwtsConverter {
      *            if common EWTS errors should be fixed
      * @return the converted string
      */
-    public String toUnicode(String str, List<String> warns, boolean sloppy) {
+    public String toUnicode(final String str, final List<String> warns, final boolean sloppy) {
+        return toUnicode(str, warns, sloppy, false);
+    }
+    
+    public String toUnicode(String str, final List<String> warns, final boolean sloppy, final boolean lenient) {
         if (str == null) {
-            return " - no data - ";
+            return null;
         }
 
-        StringBuilder out = new StringBuilder();
+        final StringBuilder out = new StringBuilder();
         int line = 1;
         int units = 0;
 
@@ -1407,12 +1556,13 @@ public class EwtsConverter {
             str = str.replaceFirst("^\\s+", "");
         }
 
-        if (sloppy) {
+        if (sloppy)
             str = normalizeSloppyWylie(str);
-        }
+        if (lenient)
+            str = normalizeForLenientSearch(str);
 
         // split into tokens
-        String[] tokens = splitIntoTokens(str);
+        final String[] tokens = splitIntoTokens(str);
         int i = 0;
 
         // iterate over the tokens
@@ -1484,7 +1634,7 @@ public class EwtsConverter {
                 i += tb.tokens_used;
                 units++;
 
-                for (String w : tb.warns) {
+                for (final String w : tb.warns) {
                     warnl(warns, line, "\"" + word.toString() + "\": " + w);
                 }
 
@@ -1533,7 +1683,7 @@ public class EwtsConverter {
 
             // stuff that shouldn't occur out of context: special chars and remaining
             // [a-zA-Z]
-            char c = t.charAt(0);
+            final char c = t.charAt(0);
             if (isSpecial(t) || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
                 warnl(warns, line, "Unexpected character \"" + t + "\".");
             }

@@ -55,6 +55,14 @@ public class ConversionTest {
     public void textConvertSloppy() {
         assertTrue(EwtsConverter.normalizeSloppyWylie("Mi la lHan Mi kaHthog 'uM Ma m ").equals("mi la lhan mi kaHthog 'uM ma ma "));
     }
+   
+    @Test
+    public void textConvertLenient() {
+        assertTrue(EwtsConverter.normalizeForLenientSearch("Mi la lHan Mi kaHthog kaH thog 'uM Ma m ").equals("mi la lhan mi kaHthog kaHthog 'uM ma m "));
+        assertTrue(EwtsConverter.normalizeForLenientSearch("Rje sTong rTen Rnying rNying rJe").equals("rje stong rten rnying rnying rje"));
+        assertTrue(EwtsConverter.normalizeForLenientSearch("Ḥdul-bā rnam-par-ḥbyed-pa\u0304").equals("'dul ba rnam par 'byed pa"));
+        assertTrue(EwtsConverter.normalizeForLenientSearch("bar-la br-i br-I").equals("bar la bri bri"));
+    }
     
     @Test
     public void textEwtsToDtsAlalc() {
