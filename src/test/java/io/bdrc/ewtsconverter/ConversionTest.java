@@ -61,6 +61,7 @@ public class ConversionTest {
         assertTrue(EwtsConverter.normalizeForLenientSearch("Mi la lHan Mi kaHthog kaH thog 'uM Ma m ").equals("mi la lhan mi kaHthog kaHthog 'uM ma m "));
         assertTrue(EwtsConverter.normalizeForLenientSearch("Rje sTong rTen Rnying rNying rJe").equals("rje stong rten rnying rnying rje"));
         assertTrue(EwtsConverter.normalizeForLenientSearch("Ḥdul-bā rnam-par-ḥbyed-pa\u0304").equals("'dul ba rnam par 'byed pa"));
+        assertTrue(EwtsConverter.normalizeForLenientSearch("Ḥdul-ba ḥbyed-pa").equals("'dul ba 'byed pa"));
         assertTrue(EwtsConverter.normalizeForLenientSearch("bar-la br-i br-I").equals("bar la bri bri"));
     }
     

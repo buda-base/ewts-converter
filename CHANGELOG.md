@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/). It follows [some conventions](http://keepachangelog.com/).
 
+## [1.6.0] - 2022-06-20
+### Added
+- convert O and E (not part of the spec but useful to represent loan words)
+- new lenient mode in toUnicode() with lower casing and DTS normalization
+
 ## [1.4.4] - 2019-06-11
 ### Fixed
 - fixes for the w character in alalc conversion
