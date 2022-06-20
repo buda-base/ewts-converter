@@ -47,6 +47,7 @@ public class ConversionTest {
         EwtsConverter converterDwts = new EwtsConverter(false, false, false, false, EwtsConverter.Mode.DTS);
         assertTrue(converterDwts.toUnicode("Ḥdul-ba rnam-par-ḥbyed-pa").equals("འདུལ་བ་རྣམ་པར་འབྱེད་པ"));
         assertTrue(converterAlalc.toUnicode("Ri-gi-ā-ra").equals("རི་གི་ཨཱ་ར"));
+        assertTrue(converterAlalc.toUnicode("Ri-gi-i-ra").equals("རི་གི་ཨི་ར"));
         assertTrue(converterAlalc.toUnicode("gʹya tʹsa").equals("གཡ་ཏྶ"));
     }
 
