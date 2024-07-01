@@ -579,7 +579,7 @@ public class EwtsConverter {
         m_ambiguous_key = new HashMap<String, Integer>();
         m_ambiguous_key.put("dgs", 1);
         m_ambiguous_key.put("dms", 1);
-        m_ambiguous_key.put("dngs", 1);
+        m_ambiguous_key.put("dngs", 0);
         m_ambiguous_key.put("'gs", 1);
         m_ambiguous_key.put("'bs", 1);
         m_ambiguous_key.put("mngs", 0);
