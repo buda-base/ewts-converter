@@ -589,7 +589,7 @@ public class EwtsConverter {
 
         m_ambiguous_wylie = new HashMap<String, String>();
         m_ambiguous_wylie.put("dgs", "dgas");
-        m_ambiguous_wylie.put("dngs", "dngas");
+        m_ambiguous_wylie.put("dngs", "dangs");
         m_ambiguous_wylie.put("dms", "dmas");
         m_ambiguous_wylie.put("'gs", "'gas");
         m_ambiguous_wylie.put("'bs", "'bas");
